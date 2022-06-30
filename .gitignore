@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 
+/expenseTracker/.env
 # testing
 /coverage
 
@@ -144,6 +145,7 @@ celerybeat.pid
 
 # Environments
 C:\Users\KIIT\Documents\Project\demo-app\expenseTracker\.env
+../
 
 # expenseTracker/.env
 # expenseTracker\.env
