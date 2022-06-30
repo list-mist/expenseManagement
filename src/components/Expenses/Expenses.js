@@ -4,19 +4,31 @@ import './Expenses.css';
 import Card from '../UI/Card';
 
 import ExpensesFilter from './ExpensesFilter';
+const rows = [
+  {
+    id: 'e1',
+    title: 'Toilet Paper',
+    amount: 94.12,
+    date: new Date(2020, 7, 14),
+  },
+]
 export default function Expenses(props) {
-  const [filteredYear, setFilteredYear] = useState('2020');
+
+  const [filteredYear, setFilteredYear] = useState('2022');
 
   const filterChangeHandler = selectedYear => {
     setFilteredYear(selectedYear);
   };
   // console.log(props)
-  const output = props.items.filter(e => {
+  console.log("12")
+  const output = props.items ? props.items.filter(e => {
+    // console.log(e.target.name)
     const targetDate = new Date(e.date)
    // console.log(targetDate+" target  ")
     // console.log(targetDate.getFullYear().toString())
-    return targetDate.getFullYear().toString() == filteredYear
-  })
+    return filteredYear ? targetDate.getFullYear().toString() == filteredYear : ""
+  }) : rows;
+    
   
   return (
     <Card className="expenses">

@@ -1,7 +1,8 @@
+import { Box } from '@mui/system';
 import React ,{useState} from 'react';
 
 import './ExpenseForm.css';
-
+import { useCreateExpensesMutation } from '../Services/UserAuthApi';
 const ExpenseForm = (props) => {
   const [title, setTitle] = useState("")
   const [amount, setAmount] = useState("")
@@ -16,29 +17,37 @@ const ExpenseForm = (props) => {
  const changeDateHanlder = (e) => {
     setDate(e.target.value);
  }
- const handleSubmit = (e) => {
+ 
+ const handleSubmitData = (e) => {
     e.preventDefault()
-    // console.log(title, amount, date)
-    const data = {
-        title : title,
-        amount : amount,
-        date : new Date(date)
-    }
+    console.log("Okay")
+    const data = new FormData(e.currentTarget);
+    console.log(data)
+    const actualData = {
+      title : data.get('title'),
+      amount : data.get('amount'), 
+      date : data.get('date')
+  }
+    // const data = {
+    //     title : title,
+    //     amount : amount,
+    //     date : new Date(date)
+    // }
   //   const data1 = {
   //     title : "title",
   //     amount : "12",
   //     date : new Date("2021-04-05")
   // }
     //  console.log(data1)
-    props.handleSubmit(data)
+    props.handleSubmit(actualData)
     setTitle("");
     setAmount("");
     setDate("");
 
  }
   return (
-  
-    <form onSubmit = {handleSubmit}>
+    <Box component = 'form' onSubmit = {handleSubmitData} >
+    <form >
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label>Title</label>
@@ -58,7 +67,7 @@ const ExpenseForm = (props) => {
       <div className='new-expense__actions'>
         <button type='submit'>Add Expense</button>
       </div>
-    </form>
+    </form></Box>
 
   );
 };

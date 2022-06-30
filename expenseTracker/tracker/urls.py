@@ -7,7 +7,7 @@ from .views import UserProfileView
 
 # router.register('api/users/profileView',UserProfileView,'users')
 urlpatterns = [
-     path('api/users/profileView', UserProfileView.as_view()),
+     path('api/users/profileView/', UserProfileView.as_view()),
  ]
 # urlpatterns = []
 

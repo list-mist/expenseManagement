@@ -5,11 +5,7 @@ import { useRegisterUserMutation } from '../Services/UserAuthApi'
 
 
 export default function SignUp() {
-//   const[error, setError] = useState({
-//     status : false,
-//     msg : "",
-//     type : "",
-// })
+
 const[ serverError, setServerError] = useState({})
 const navigate = useNavigate()
 const [registerUser, {isLoading, isError}] = useRegisterUserMutation()

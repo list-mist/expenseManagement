@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ExpenseForm from './ExpenseForm';
+import ExpForm from './ExpForm';
 import './NewExpense.css';
 import { useCreateExpensesMutation } from '../Services/UserAuthApi';
 import { getToken } from '../Services/LocalStorageService';
@@ -8,14 +9,14 @@ const NewExpense = (props) => {
   
   const {access_token} = getToken()
   const [createExpenses] = useCreateExpensesMutation(access_token)
-  console.log("Oka")
-  const handleSubmit = async(data) => {
+  // console.log("Oka")
+  const handleSubmit = async(actualData) => {
     // console.log(data)
-    const response = await createExpenses(access_token, data)
+    const response = await createExpenses({actualData,access_token})
     console.log(response.data)
     if(response.data){
       const Newdata = {
-        ...data,
+        ...actualData,
         id : Math.random.toString()
        }
        props.onAddExpense(Newdata)
@@ -32,8 +33,9 @@ const NewExpense = (props) => {
   }
   return (
     <div className='new-expense'>
-      
-      <ExpenseForm handleSubmit = {handleSubmit}/>
+      {console.log("Hellos")}
+      {/* <ExpenseForm handleSubmit = {handleSubmit}/> */}
+      <ExpForm handleSubmit = {handleSubmit}/>
     </div>
   );
 };

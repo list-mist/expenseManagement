@@ -6,11 +6,7 @@ import { storeToken, getToken } from '../Services/LocalStorageService'
 import { useDispatch } from 'react-redux'
 import { setUserToken } from '../../features/authSlice'
 const UserLogin = () => {
-    // const[error, setError] = useState({
-    //     status : false,
-    //     msg : "",
-    //     type : "",
-    // })
+  
     const[ serverError, setServerError] = useState({})
     const navigate = useNavigate()
     const [loginUser] = useLoginUserMutation()

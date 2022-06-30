@@ -26,7 +26,7 @@ export const DashBoard = () => {
   const {access_token} = getToken()
   const {data, isSuccess} = useManageExpensesQuery(access_token)
   
-  console.log(data)
+   // console.log(data)
   const getItem = async() =>{
     
       // if(data && isSuccess){ 
@@ -34,10 +34,10 @@ export const DashBoard = () => {
         console.log(items)
     //  }
   }
-   console.log(items)
+  console.log(items)
   useEffect(() =>{
     getItem()
-  },[items])
+  },[items,data])
   const expiration = new Date(15);
   const now = new Date();
   const fiveMinutes = 1000 * 60 * 15;
@@ -55,7 +55,7 @@ export const DashBoard = () => {
   return (
      <>
      <NewExpense onAddExpense = {AddExpense} />
-     <Expenses items={items} /> 
+     <Expenses items={items} setItems = {setItems} /> 
      </>
   )
 }
