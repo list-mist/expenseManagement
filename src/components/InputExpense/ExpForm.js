@@ -11,6 +11,7 @@ export default function ExpForm(props) {
     const[num, setNum] = useState(10)
     const {access_token} = getToken()
     const [createExpenses,isSuccess] = useCreateExpensesMutation()
+    
     const handleSubmit = async (e) =>{
         e.preventDefault()
         const data = new FormData(e.currentTarget);
@@ -18,7 +19,7 @@ export default function ExpForm(props) {
         const actualData = {
             title : data.get('title'),
             amount : data.get('amount'), 
-            date : (data.get('date'))
+            date : data.get('date')
         }
         console.log(actualData)
         

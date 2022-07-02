@@ -2,7 +2,7 @@ import React , {useState} from 'react'
 import ExpenseItem from './ExpenseItem'
 import './Expenses.css';
 import Card from '../UI/Card';
-
+import { ExpensesChart } from './ExpensesChart';
 import ExpensesFilter from './ExpensesFilter';
 const rows = [
   {
@@ -20,7 +20,7 @@ export default function Expenses(props) {
     setFilteredYear(selectedYear);
   };
   // console.log(props)
-  console.log("12")
+  // console.log("12")
   const output = props.items ? props.items.filter(e => {
     // console.log(e.target.name)
     const targetDate = new Date(e.date)
@@ -34,9 +34,10 @@ export default function Expenses(props) {
     <Card className="expenses">
      <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
      {/* {console.log("Ok")} */}
+     <ExpensesChart expenses = {output} />
      {output.map((expense) => (
           <ExpenseItem
-              key={ Math.random.toString()}
+            key={ Math.random.toString()}
             
             title={expense.title}
             amount={expense.amount}

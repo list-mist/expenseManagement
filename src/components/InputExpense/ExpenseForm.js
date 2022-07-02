@@ -20,7 +20,7 @@ const ExpenseForm = (props) => {
  
  const handleSubmitData = (e) => {
     e.preventDefault()
-    console.log("Okay")
+    // console.log("Okay")
     const data = new FormData(e.currentTarget);
     console.log(data)
     const actualData = {
@@ -28,17 +28,6 @@ const ExpenseForm = (props) => {
       amount : data.get('amount'), 
       date : data.get('date')
   }
-    // const data = {
-    //     title : title,
-    //     amount : amount,
-    //     date : new Date(date)
-    // }
-  //   const data1 = {
-  //     title : "title",
-  //     amount : "12",
-  //     date : new Date("2021-04-05")
-  // }
-    //  console.log(data1)
     props.handleSubmit(actualData)
     setTitle("");
     setAmount("");

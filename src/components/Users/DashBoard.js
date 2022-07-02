@@ -22,30 +22,27 @@ const rows = [
 ];
 export const DashBoard = () => {
   const [items, setItems] = useState([])
-  const [time, setTime] = useState(0)
+  const [tokenExpire, setTokenExpire] = useState(false)
   const {access_token} = getToken()
   const {data, isSuccess} = useManageExpensesQuery(access_token)
   
-   // console.log(data)
+  console.log(data)
+  console.log(data.errors)
   const getItem = async() =>{
-    
-      // if(data && isSuccess){ 
+    // error.data.errors.non_field_errors[0]
+      if(data && isSuccess){ 
         setItems(data)
         console.log(items)
-    //  }
+      }
+      if(data.errors){
+         console.log("Login again")
+      }
   }
   console.log(items)
   useEffect(() =>{
     getItem()
   },[items,data])
-  const expiration = new Date(15);
-  const now = new Date();
-  const fiveMinutes = 1000 * 60 * 15;
-  if(expiration.getTime() - now.getTime() < fiveMinutes){
-    console.log("Token will expire soon")
-  }else{
-    console.log("Token expired !!!!!")
-  }
+  
   const[expenses, setExpenses] = useState(rows)
   const AddExpense = (expense) => {
     setExpenses((prevExpenses) => {
@@ -54,7 +51,7 @@ export const DashBoard = () => {
   };
   return (
      <>
-     <NewExpense onAddExpense = {AddExpense} />
+     <NewExpense onAddExpense = {AddExpense}  />
      <Expenses items={items} setItems = {setItems} /> 
      </>
   )

@@ -3,7 +3,7 @@ import './ExpenseDate.css'
 export default function ExpenseDate(props) {
   //onst expenseDate = new Date(2000,11,11);
   // console.log(new Date("2022-06-17"))
-  const date = new Date("2022-06-17")
+  const date = new Date(props.date)
   // const month = props.date?.toLocaleString("en-US", { month: "long" });
   // const day = props.date?.toLocaleString("en-US", { day: "2-digit" });
   // const year = props.date?.getFullYear();
