@@ -7,5 +7,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExpenseItem
         # fields = '__all__'
-        fields = ('title','amount','date')
+        fields = ('id','title','amount','date')
         read_only = 'added_by'

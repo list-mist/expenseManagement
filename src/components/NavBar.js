@@ -19,7 +19,7 @@ export const NavBar = () => {
       setValue(newValue);
     };
    // console.log(getToken())
-    const {access_token, refresh_token} = getToken()
+    const {access_token} = getToken()
     console.log(access_token)
     // if(access_token !== null) {
     //   setIfLogin(true)
@@ -42,7 +42,7 @@ export const NavBar = () => {
             <><Tab label="Login" value="1" component={NavLink}
                   to="" /><Tab label="SignUp" value="2" component={NavLink}
                     to="signup" /><Tab label="Demo" value="3" component={NavLink}
-                      to="demo" /></> ) : ( <Button onClick={logout} value="4"> Logout </Button> )}
+                      to="demo" /></> ) : ( <Button onClick={logout} value="4" variant="contained"> Logout </Button> )}
           </TabList> 
         </Box>
       </TabContext>

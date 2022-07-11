@@ -16,7 +16,13 @@ export const tokenExpire = createSlice({
      }
   },
 })
+// export const tokenExpire = (timer) => {
+//    setTimeout( () =>{
+//      console.log("Hello")
+//    }, 5000
+//    )
+//  }
 
-export const { setUserToken, unSetUserToken } = tokenExpire.actions
+export const {  } = tokenExpire.actions
 
 export default tokenExpire.reducer

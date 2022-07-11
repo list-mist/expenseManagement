@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {useManageExpensesQuery} from '../Services/UserAuthApi'
-
+import { useNavigate } from 'react-router-dom'
 import { getToken } from '../Services/LocalStorageService';
 import Expenses from '../Expenses/Expenses'
 import NewExpense from '../InputExpense/NewExpense'
+import { useDispatch } from 'react-redux'
+// import { getUserToken} from '../../features/authSlice'
+import LogoutDialog from './LogoutDialog';
 const rows = [
   {
     id: 'e1',
@@ -25,23 +28,46 @@ export const DashBoard = () => {
   const [tokenExpire, setTokenExpire] = useState(false)
   const {access_token} = getToken()
   const {data, isSuccess} = useManageExpensesQuery(access_token)
-  
+  const [open, setOpen] = useState(true);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const navigate = useNavigate()
   console.log(data)
-  console.log(data.errors)
+  
   const getItem = async() =>{
     // error.data.errors.non_field_errors[0]
       if(data && isSuccess){ 
+        
         setItems(data)
         console.log(items)
       }
-      if(data.errors){
-         console.log("Login again")
-      }
+      // if(data.errors){
+      //    console.log("Login again")
+      // }
   }
   console.log(items)
+  const dispatch = useDispatch()
+  // dispatch(setUserToken({acces_token : acces_token}))
+  //  console.log(dispatch(state.access_token))
+  console.log(access_token)
+  // setTimeout("logout now ", 2000);
   useEffect(() =>{
-    getItem()
-  },[items,data])
+    if(access_token) {
+
+      getItem()
+      
+    }else{
+      setOpen(true)
+      console.log("Kindly login again!!")
+      navigate('/')
+    }
+  },[items,data,access_token])
   
   const[expenses, setExpenses] = useState(rows)
   const AddExpense = (expense) => {
@@ -49,8 +75,14 @@ export const DashBoard = () => {
       return [expense, ...prevExpenses];
     });
   };
+
   return (
      <>
+     {/* {console.log(open , "he")} */}
+     {/* {open ? <logoutDialog open = {true} handleClose = {handleClose} /> : ''  } */}
+     <LogoutDialog open = {open} handleClose = {handleClose} /> 
+    
+     {console.log(open)}
      <NewExpense onAddExpense = {AddExpense}  />
      <Expenses items={items} setItems = {setItems} /> 
      </>

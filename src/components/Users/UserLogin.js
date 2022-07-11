@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react'
 import { TextField, Button, Box , Alert, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useLoginUserMutation } from '../Services/UserAuthApi'
-import { storeToken, getToken } from '../Services/LocalStorageService'
+import { storeToken, getToken, removeToken } from '../Services/LocalStorageService'
 import { useDispatch } from 'react-redux'
-import { setUserToken } from '../../features/authSlice'
+import { setUserToken, unSetUserToken } from '../../features/authSlice'
+
 const UserLogin = () => {
   
     const[ serverError, setServerError] = useState({})
@@ -28,10 +29,23 @@ const UserLogin = () => {
             storeToken(response.data.token)
             const {acces_token} = getToken()
             dispatch(setUserToken({acces_token : acces_token}))
+            runLogout()
             navigate('/user')
         }
         
     }
+    const runLogout = () => {
+        setTimeout( () =>{
+         console.log("You need to logout")
+         logout()
+       }, 600 * 1000
+       )
+     }
+     const logout = (e) => {
+        dispatch(unSetUserToken({access_token : null}))
+        removeToken()
+        navigate('/')
+     }
     const {acces_token} = getToken()
     useEffect(()=>{
         dispatch(setUserToken({acces_token : acces_token}))
