@@ -7,6 +7,8 @@ import NewExpense from '../InputExpense/NewExpense'
 import { useDispatch } from 'react-redux'
 // import { getUserToken} from '../../features/authSlice'
 import LogoutDialog from './LogoutDialog';
+import refreshData from '../../features/refreshData';
+
 const rows = [
   {
     id: 'e1',
@@ -25,11 +27,11 @@ const rows = [
 ];
 export const DashBoard = () => {
   const [items, setItems] = useState([])
-  const [tokenExpire, setTokenExpire] = useState(false)
   const {access_token} = getToken()
   const {data, isSuccess} = useManageExpensesQuery(access_token)
   const [open, setOpen] = useState(true);
-
+  const {state, action} = refreshData
+  // console.log(state)
   // const handleClickOpen = () => {
   //   setOpen(true);
   // };
@@ -59,10 +61,12 @@ export const DashBoard = () => {
   // setTimeout("logout now ", 2000);
   useEffect(() =>{
     if(access_token) {
-
+      // console.log(props.dataAdded)
       getItem()
       
-    }else{
+    }
+
+    else{
       setOpen(true)
       console.log("Kindly login again!!")
       navigate('/')
@@ -75,15 +79,14 @@ export const DashBoard = () => {
       return [expense, ...prevExpenses];
     });
   };
-
+  
   return (
      <>
-     {/* {console.log(open , "he")} */}
-     {/* {open ? <logoutDialog open = {true} handleClose = {handleClose} /> : ''  } */}
+    
      <LogoutDialog open = {open} handleClose = {handleClose} /> 
     
-     {console.log(open)}
-     <NewExpense onAddExpense = {AddExpense}  />
+     {/* {console.log(open)} */}
+     <NewExpense onAddExpense = {AddExpense} getItems = {getItem} />
      <Expenses items={items} setItems = {setItems} /> 
      </>
   )

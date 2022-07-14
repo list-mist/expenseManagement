@@ -1,6 +1,7 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+
 export const UserAuthApi = createApi({
   reducerPath: 'UserAuthApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000/api/users/' }),
@@ -30,7 +31,9 @@ export const UserAuthApi = createApi({
               'Content-type': 'application/json',
             }
           }
+          
         }
+        
     }
     ),
     manageExpenses : builder.query(
@@ -45,6 +48,7 @@ export const UserAuthApi = createApi({
                     }
                 }
             }
+
 
         }
     ),
@@ -63,10 +67,26 @@ export const UserAuthApi = createApi({
       }
   }
   ),
-  }),
+  deleteExpenses: builder.mutation({
+      
+    query: ({actualData,access_token}) => {
+       {console.log(actualData,access_token)}
+      return {
+        url : 'profileView/',
+        method : 'DELETE',
+        body : actualData,
+        headers : {
+            'authorization' : `Bearer ${access_token}`,
+        }
+      }
+    }
+}
+)
 })
+})
+
 
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useRegisterUserMutation, useLoginUserMutation, useManageExpensesQuery, useCreateExpensesMutation } = UserAuthApi
+export const {useRegisterUserMutation, useLoginUserMutation, useManageExpensesQuery, useCreateExpensesMutation,useDeleteExpensesMutation} = UserAuthApi

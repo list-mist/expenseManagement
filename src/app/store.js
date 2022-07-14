@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { UserAuthApi } from '../components/Services/UserAuthApi'
 import authSlice from '../features/authSlice'
+import refreshData from '../features/refreshData'
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
     [UserAuthApi.reducerPath]: UserAuthApi.reducer,
-    auth : authSlice
+    auth : authSlice,
+    refreshData : refreshData
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
