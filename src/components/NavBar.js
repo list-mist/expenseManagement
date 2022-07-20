@@ -36,14 +36,26 @@ export const NavBar = () => {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
+{/* 
           <TabList onChange={handleChange} aria-label="lab API tabs example">
           {access_token === null ? (
             <><Tab label="Login" value="1" component={NavLink}
                   to="" /><Tab label="SignUp" value="2" component={NavLink}
                     to="signup" /><Tab label="Demo" value="3" component={NavLink}
                       to="demo" /></> ) : ( <Button onClick={logout} value="4" variant="contained"> Logout </Button> )}
-          </TabList> 
+          </TabList>  */}
+          {/* <TabList onChange={handleChange} aria-label="lab API tabs example">
+          {access_token === null ? (
+            <></> ) : ( <Button onClick={logout} value="4" variant="contained"> Logout </Button> )}
+          </TabList>  */}
+
+          {access_token  &&
+            
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Button onClick={logout} value="4" variant="contained"> Logout </Button> 
+            </TabList>
+          }
+
         </Box>
       </TabContext>
     </Box>

@@ -9,6 +9,7 @@ export const UserAuthApi = createApi({
     registerUser : builder.mutation(
         {
             query : (user) => {
+              // console.log(user)
                 return {
                     url : 'signup/',
                     method : 'POST',
@@ -39,7 +40,7 @@ export const UserAuthApi = createApi({
     manageExpenses : builder.query(
         {
             query : (access_token) => {
-              //  console.log(access_token)
+                console.log(access_token  + " ok")
                 return {
                     url : 'profileView/',
                     method : 'GET',

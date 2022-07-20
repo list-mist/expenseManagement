@@ -6,7 +6,9 @@ import SignUp from './SignUp'
 
 
 const TabPanel = (props) => {
+  
   const { children, value, index } = props;
+  
   return (
     <div role='tabpanel' hidden={value !== index}>
       {
@@ -44,12 +46,13 @@ export default function Login() {
             </Tab>
           </Tabs>
         </Box>
-        <TabPanel value={value} index={1}>
-              <SignUp/>
-        </TabPanel>
-        <TabPanel value={value} index={0}>
-              <UserLogin/>
-        </TabPanel>
+      
+          <TabPanel value={value} index={1}>
+                <SignUp />
+              </TabPanel><TabPanel value={value} index={0}>
+                  <UserLogin />
+                </TabPanel>
+        
        </Card>
       </Grid>
     </Grid>

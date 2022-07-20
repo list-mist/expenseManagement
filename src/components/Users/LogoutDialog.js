@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import Login from './Login';
 
 export default function LogoutDialog({open,handleClose}) {
   console.log(open)
@@ -22,6 +23,7 @@ export default function LogoutDialog({open,handleClose}) {
       <Button onClick={handleClose} autoFocus>
         Okay
       </Button>
+      <Login/>
     </DialogActions>
   </Dialog>
   </div>

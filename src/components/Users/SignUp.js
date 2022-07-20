@@ -55,7 +55,7 @@ const handleSubmit = async (e) =>{
  
         />
         {serverError.email ? <Typography> {serverError.email[0]} </Typography> : ""}
-        <TextField
+        <TextField sx = {{ mt : 4}}
             required
             fullWidth
             id = "name"
@@ -64,7 +64,7 @@ const handleSubmit = async (e) =>{
  
         />
         {serverError.name ? <Typography> {serverError.name[0]} </Typography> : ""}
-         <TextField sx={{ mt : 2}}
+         <TextField sx={{ mt : 4}}
             required
             fullWidth
             id = "password"
@@ -73,13 +73,13 @@ const handleSubmit = async (e) =>{
             type = "password"
         />
         {serverError.password ? <Typography> {serverError.password[0]} </Typography> : ""}
-         <TextField sx={{ mt : 2}}
+         <TextField sx={{ mt : 4}}
             required
             fullWidth
             id = "password2"
             name = "password2"
             label = "password2"
-            type = "Confirm password"
+            type = "password"
         />
         {serverError.password2 ? <Typography> {serverError.password2[0]} </Typography> : ""}
         <Box sx={{ mt : 2}}  textAlign = "center">

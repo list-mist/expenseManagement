@@ -9,6 +9,7 @@ import { Layout } from './components/pages/Layout';
 import { Demo } from './components/Users/Demo';
 import { DashBoard } from './components/Users/DashBoard';
 import { useSelector } from 'react-redux';
+import { getToken } from './components/Services/LocalStorageService';
 const Dummy_expense = [
   {
     id: 'e1',
@@ -26,8 +27,9 @@ const Dummy_expense = [
   
 ];
 function App() {
-  const {access_token} = useSelector(state => state.auth)
+  // const {access_token} = useSelector(state => state.auth)
   const[expenses, setExpenses] = useState(Dummy_expense)
+  const {access_token} = getToken()
   const AddExpense = (expense) => {
     setExpenses((prevExpenses) => {
       return [expense, ...prevExpenses];
@@ -37,13 +39,14 @@ function App() {
     <div>
       <Router>
         <Routes> 
-          <Route path="/" element = {<Layout/>} >
+          <Route path="/" element = {access_token ? (<><NavBar /><DashBoard /></>) : <Layout/>} >
+          {/* {access_token === null ? (<> <Route path="/" element = {<Layout/>} ></Route><Route index element={<Login />} /><Route path="signup" element={<SignUp />} /></>)  : (<Route path="user" element = {<DashBoard/> } />)} */}
           {/* <Route index element = {!access_token ? <Login/> : <DashBoard/>} /> */}
-          <Route index element = { <Login/>} />
+           <Route index element = { <Login/>} />
           <Route path="signup" element = {<SignUp/>} />
           <Route path="demo" element = {<Demo/>} />
-          {/* <Route path="user" element = {access_token ? <DashBoard/> : <Login/>} /> */}
-          <Route path="user" element = {<DashBoard/> } />
+          {/* <Route path="user" element = {access_token ? <DashBoard/> : <Login/>} />  */}
+          <Route path="user" element = {<DashBoard/> } /> 
           </Route>
         </Routes>
       </Router>

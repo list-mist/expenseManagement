@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import {useManageExpensesQuery} from '../Services/UserAuthApi'
-import { useNavigate } from 'react-router-dom'
-import { getToken } from '../Services/LocalStorageService';
+import {useManageExpensesQuery, useCreateExpensesMutation,useDeleteExpensesMutation} from '../Services/UserAuthApi'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { getToken, removeToken } from '../Services/LocalStorageService';
 import Expenses from '../Expenses/Expenses'
 import NewExpense from '../InputExpense/NewExpense'
-import { useDispatch } from 'react-redux'
-// import { getUserToken} from '../../features/authSlice'
 import LogoutDialog from './LogoutDialog';
-import refreshData from '../../features/refreshData';
+import { useSelector, useDispatch } from 'react-redux'
+import { unSetUserToken } from '../../features/authSlice';
 
+import { getData } from '../Services/Data';
 const rows = [
   {
     id: 'e1',
@@ -28,32 +28,42 @@ const rows = [
 export const DashBoard = () => {
   const [items, setItems] = useState([])
   const {access_token} = getToken()
-  const {data, isSuccess} = useManageExpensesQuery(access_token)
-  const [open, setOpen] = useState(true);
-  const {state, action} = refreshData
-  // console.log(state)
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+
+  // const {data, isSuccess} = useManageExpensesQuery(access_token)
+  // const [data1, setData1] = useState([])
+
+  const [createExpenses] = useCreateExpensesMutation(access_token)
+  const [open, setOpen] = useState(false);
+  const[expenses, setExpenses] = useState({
+    title: '',
+    amount: '',
+    date: ''
+  })
 
   const handleClose = () => {
     setOpen(false);
   };
   const navigate = useNavigate()
-  console.log(data)
-  
+
+
   const getItem = async() =>{
     // error.data.errors.non_field_errors[0]
-      if(data && isSuccess){ 
-        
-        setItems(data)
+      // if(data && isSuccess){ 
+        // console.log("Called")
+        //setItems(await getData(access_token))
+        //const { data1 } = await getData(access_token)
+        setItems(await getData(access_token))
         console.log(items)
-      }
+        // console.log(data1, " ok -- ")
+        // setItems(data1)
+        // console.log(items)
+      // }
+
       // if(data.errors){
       //    console.log("Login again")
       // }
   }
-  console.log(items)
+  // console.log(items)
   const dispatch = useDispatch()
   // dispatch(setUserToken({acces_token : acces_token}))
   //  console.log(dispatch(state.access_token))
@@ -61,33 +71,68 @@ export const DashBoard = () => {
   // setTimeout("logout now ", 2000);
   useEffect(() =>{
     if(access_token) {
-      // console.log(props.dataAdded)
       getItem()
-      
     }
-
     else{
       setOpen(true)
-      console.log("Kindly login again!!")
-      navigate('/')
+      console.log("Kindly login again! !")
     }
-  },[items,data,access_token])
+  },[access_token])
   
-  const[expenses, setExpenses] = useState(rows)
-  const AddExpense = (expense) => {
-    setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
-    });
+  
+  const AddExpense = (e) => {
+    // setExpenses((prevExpenses) => {
+    //   return [expense, ...prevExpenses];
+    // });
+    const newData = {
+      title: e.title,
+      amount: e.amount,
+      date: e.date
+    }
+    setExpenses({...expenses,  newData});
   };
-  
+  const handleSubmit = async(actualData) => {
+    // console.log("ok here")
+    const response = await createExpenses({actualData,access_token})
+    console.log(response)
+    // console.log("ok here no")
+    // console.log(response.error.data.errors.code)
+    if(response.error && response.error.data.errors.code === 'token_not_valid'){
+       dispatch(unSetUserToken({access_token : null}))
+       removeToken()
+       navigate('/')
+    }
+    if(response.data){
+      const Newdata = {
+        ...actualData,
+        id : Math.random.toString()
+       }
+       
+      AddExpense(Newdata)
+      getItem()
+    }
+    
+  }
+
+    const [deleteExpenses] = useDeleteExpensesMutation(access_token)
+    const deleteExpense = async (e,title,date) => {
+    console.log(title,date)
+    const actualData = {
+             'title' : title,
+             'date':date
+    }
+    const response = deleteExpenses({actualData,access_token})
+          // props.getItem()
+     console.log(response, "ok")
+  }
+
   return (
      <>
     
-     <LogoutDialog open = {open} handleClose = {handleClose} /> 
-    
-     {/* {console.log(open)} */}
-     <NewExpense onAddExpense = {AddExpense} getItems = {getItem} />
-     <Expenses items={items} setItems = {setItems} /> 
+     <LogoutDialog open = {open} handleClose = {handleClose} />  
+     <NewExpense onAddExpense = {AddExpense} getItems = {getItem} handleSubmit = {handleSubmit} />
+     <Expenses items={items} setItems = {setItems} deleteExpense = {deleteExpense} /> 
+
      </>
   )
 }
