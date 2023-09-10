@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { TextField, Button, Box , Alert, Typography } from '@mui/material'
+import { TextField, Button, Box , Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useRegisterUserMutation } from '../Services/UserAuthApi'
 
@@ -12,6 +12,7 @@ const [registerUser, {isLoading, isError}] = useRegisterUserMutation()
 
 const handleSubmit = async (e) =>{
     e.preventDefault()
+    
     const data = new FormData(e.currentTarget);
     const actualData = {
         email : data.get('email'),

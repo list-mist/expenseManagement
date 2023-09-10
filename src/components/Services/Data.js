@@ -11,11 +11,14 @@ export const getData = async (access_token) => {
 }
 
 
-export const deleteData = async (access_token) => {
-    
+export const deleteData = async ({actualData , access_token}) => {
+    console.log(actualData)
     let resp = await axios.delete('http://127.0.0.1:8000/api/users/profileView/', 
-    {headers : {
-        'authorization' : `Bearer ${access_token}`,
-    }})
+    {
+        body : actualData,
+        headers : {
+            'authorization' : `Bearer ${access_token}`,
+        }
+    })
     return resp.data
 }

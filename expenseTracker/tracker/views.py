@@ -25,6 +25,7 @@ class UserProfileView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors)
     def delete(self, request):
+        print(request.data, "golu")
         data = ExpenseItem.objects.filter(title = request.data['title'], date = request.data['date'])
         # serializer = UserProfileSerializer(data, many = True)
         data.delete()

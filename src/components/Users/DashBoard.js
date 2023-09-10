@@ -8,7 +8,7 @@ import LogoutDialog from './LogoutDialog';
 import { useSelector, useDispatch } from 'react-redux'
 import { unSetUserToken } from '../../features/authSlice';
 
-import { getData } from '../Services/Data';
+import { deleteData, getData } from '../Services/Data';
 const rows = [
   {
     id: 'e1',
@@ -54,21 +54,13 @@ export const DashBoard = () => {
         //const { data1 } = await getData(access_token)
         setItems(await getData(access_token))
         console.log(items)
-        // console.log(data1, " ok -- ")
-        // setItems(data1)
-        // console.log(items)
-      // }
-
-      // if(data.errors){
-      //    console.log("Login again")
-      // }
+       
   }
-  // console.log(items)
+
   const dispatch = useDispatch()
-  // dispatch(setUserToken({acces_token : acces_token}))
-  //  console.log(dispatch(state.access_token))
+  
   console.log(access_token)
-  // setTimeout("logout now ", 2000);
+  
   useEffect(() =>{
     if(access_token) {
       getItem()
@@ -121,9 +113,13 @@ export const DashBoard = () => {
              'title' : title,
              'date':date
     }
-    const response = deleteExpenses({actualData,access_token})
+    // const response = deleteData({actualData, access_token})
+     
+    const response = await deleteExpenses({actualData,access_token})
+    console.log(response)
+    getItem()
           // props.getItem()
-     console.log(response, "ok")
+    //  console.log(response, "ok")
   }
 
   return (

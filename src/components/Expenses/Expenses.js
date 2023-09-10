@@ -4,6 +4,7 @@ import './Expenses.css';
 import Card from '../UI/Card';
 import { ExpensesChart } from './ExpensesChart';
 import ExpensesFilter from './ExpensesFilter';
+import UserData from '../Users/UserData';
 const rows = [
   {
     id: 'e1',
@@ -42,8 +43,7 @@ export default function Expenses(props) {
             title={expense.title}
             amount={expense.amount}
             date={expense.date}
-            
-            
+            deleteExp = {props.deleteExpense}
           />
         ))}
     </Card>

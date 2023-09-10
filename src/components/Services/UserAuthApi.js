@@ -71,7 +71,7 @@ export const UserAuthApi = createApi({
   deleteExpenses: builder.mutation({
       
     query: ({actualData,access_token}) => {
-       {console.log(actualData,access_token)}
+      //  {console.log(actualData,access_token)}
       return {
         url : 'profileView/',
         method : 'DELETE',
