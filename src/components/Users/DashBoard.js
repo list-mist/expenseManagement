@@ -87,11 +87,11 @@ export const DashBoard = () => {
     // console.log("ok here")
     const response = await createExpenses({actualData,access_token})
     console.log(response)
-    // console.log("ok here no")
-    // console.log(response.error.data.errors.code)
+   
     if(response.error && response.error.data.errors.code === 'token_not_valid'){
        dispatch(unSetUserToken({access_token : null}))
        removeToken()
+       // remove token
        navigate('/')
     }
     if(response.data){
